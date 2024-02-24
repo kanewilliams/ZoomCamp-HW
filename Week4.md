@@ -49,7 +49,7 @@ You'll need to have completed the ["Build the first dbt models"](https://www.you
 - The code from any development branch that has been opened based on main
 - **The code from the development branch we are requesting to merge to main**
 
-This is primarily a guess... It is either (1) or (4). Production branch only worked for me after merging, so practically should be (1). However, (4) makes more sense theoretically.
+**Explanation**: This is primarily a guess... It is either (1) or (4). Production branch only worked for me after merging, so practically should be (1). However, (4) makes more sense theoretically.
 
 
 ### Question 3 (2 points)
@@ -62,10 +62,15 @@ Create a core model similar to fact trips, but selecting from stg_fhv_tripdata a
 Similar to what we've done in fact_trips, keep only records with known pickup and dropoff locations entries for pickup and dropoff locations. 
 Run the dbt model without limits (is_test_run: false).
 
-- 12998722
+- **12998722**
 - 22998722
 - 32998722
 - 42998722
+
+**Explanation**: Unfortunately, I get less than any of the possible answers, so I selected the lowest answer. I suspect I made a mistake in my code.
+
+![image](https://github.com/kanewilliams/ZoomCamp2024-HW/assets/5062932/9c99939f-c775-4742-b152-36fb65c29be3)
+
 
 ### Question 4 (2 points)
 
@@ -75,9 +80,15 @@ Create a dashboard with some tiles that you find interesting to explore the data
 
 - FHV
 - Green
-- Yellow
+- **Yellow**
 - FHV and Green
-- 
+
+**Explanation**: Unfortunately it's impossible to prove the correct answer, since fact_fhv_trips has too little data. Nevertheless, I have tried looker studio! :
+
+![image](https://github.com/kanewilliams/ZoomCamp2024-HW/assets/5062932/cb88e720-53d5-43c9-b0e0-a673039bedde)
+
+My guess is that Yello taxis will nevertheless have more trips.
+
 ## Submitting the solutions
 
 * Form for submitting: [https://courses.datatalks.club/de-zoomcamp-2024/homework/hw3](https://courses.datatalks.club/de-zoomcamp-2024/)https://courses.datatalks.club/de-zoomcamp-2024/
