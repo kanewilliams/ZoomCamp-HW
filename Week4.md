@@ -28,8 +28,17 @@ Now we are ready to rock and roll!
 You'll need to have completed the ["Build the first dbt models"](https://www.youtube.com/watch?v=UVI30Vxzd6c) video. 
 - It's the same as running *dbt build*
 - It applies a _limit 100_ to all of our models
-- It applies a _limit 100_ only to our staging models
+- **It applies a _limit 100_ only to our staging models**
 - Nothing
+
+**Explanation**: Because only the staging models have the line:
+```SQL
+{% if var('is_test_run', default=true) %}
+
+  limit 100
+
+{% endif %}
+```
 
 ### Question 2: 
 
@@ -38,7 +47,9 @@ You'll need to have completed the ["Build the first dbt models"](https://www.you
 - The code that has been merged into the main branch
 - The code that is behind the creation object on the dbt_cloud_pr_ schema
 - The code from any development branch that has been opened based on main
-- The code from the development branch we are requesting to merge to main
+- **The code from the development branch we are requesting to merge to main**
+
+This is primarily a guess... It is either (1) or (4). Production branch only worked for me after merging, so practically should be (1). However, (4) makes more sense theoretically.
 
 
 ### Question 3 (2 points)
