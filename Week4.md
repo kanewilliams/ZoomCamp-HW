@@ -20,6 +20,8 @@ FROM FILES (
   skip_leading_rows = 1
 );
 ```
+
+You may view [my DBT code here](https://github.com/kanewilliams/data-engineering-zoomcamp/tree/main/04-analytics-engineering), and [my Looker Studio Dashboard here](https://lookerstudio.google.com/reporting/4a24b422-7485-4a59-b58a-0f419a118a03).
 Now we are ready to rock and roll!
 
 ### Question 1: 
