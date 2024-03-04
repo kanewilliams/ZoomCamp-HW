@@ -47,6 +47,8 @@ What's the output?
 
 **FHV October 2019**
 
+<img align="right" width="600" height="600" src=https://github.com/kanewilliams/ZoomCamp2024-HW/assets/5062932/40e703ae-c892-4c8f-9c96-a9e8db8fb647)></img>
+
 Read the October 2019 FHV into a Spark Dataframe with a schema as we did in the lessons.
 
 Repartition the Dataframe to 6 partitions and save it to parquet.
@@ -58,7 +60,7 @@ What is the average size of the Parquet (ending with .parquet extension) Files t
 - 25MB
 - 87MB
 
-Around 6MB: ![image](https://github.com/kanewilliams/ZoomCamp2024-HW/assets/5062932/40e703ae-c892-4c8f-9c96-a9e8db8fb647)
+Around 6MB.
 
 ### Question 3: 
 
@@ -71,10 +73,43 @@ Consider only trips that started on the 15th of October.
 - 108,164
 - 12,856
 - 452,470
-- 62,610
+- **62,610**
 
-> [!IMPORTANT]
-> Be aware of columns order when defining schema
+```python
+spark = SparkSession.builder \
+    .master("local[*]") \
+    .appName('test') \
+    .getOrCreate()
+
+schema = types.StructType([
+    types.StructField('dispatching_base_num', types.StringType(), True),
+    types.StructField('pickup_datetime', types.TimestampType(), True),
+    types.StructField('dropoff_datetime', types.TimestampType(), True),
+    types.StructField('PULocationID', types.IntegerType(), True),
+    types.StructField('DOLocationID', types.IntegerType(), True),
+    types.StructField('SR_Flag', types.StringType(), True),
+    types.StructField('Affiliated_base_number', types.StringType(), True),
+])
+
+df = spark.read \
+    .option("header", "true") \
+    .schema(schema) \
+    .csv('fhv_tripdata_2019-10.csv')
+
+df.registerTempTable('df')
+```
+
+```SQL
+spark.sql("""
+SELECT
+    count(1)
+FROM
+    df
+WHERE
+    DAY(pickup_datetime) = 15
+""").show()
+```
+
 
 ### Question 4: 
 
@@ -84,8 +119,31 @@ What is the length of the longest trip in the dataset in hours?
 
 - 631,152.50 Hours
 - 243.44 Hours
-- 7.68 Hours
+- **7.68 Hours**
 - 3.32 Hours
+
+```sql
+spark.sql("""
+SELECT
+    (dropoff_datetime - pickup_datetime)/3600 as trip_length
+FROM
+    df
+ORDER BY trip_length DESC
+""").show()
+```
+
+returns:
+
+```
++--------------------+
+|         trip_length|
++--------------------+
+|INTERVAL '7 07:19...|
+|INTERVAL '7 07:19...|
+|INTERVAL '1 00:21...|
+|INTERVAL '0 19:28...|
+...
+```
 
 ### Question 5: 
 
@@ -111,6 +169,34 @@ Using the zone lookup data and the FHV October 2019 data, what is the name of th
 - Jamaica Bay
 - Union Sq
 - Crown Heights North
+
+```SQL
+spark.sql("""
+SELECT
+    PULocationID,
+    COUNT(PULocationID)
+FROM
+    df
+GROUP BY PULocationID
+ORDER BY COUNT(PULocationID) ASC
+""").show()
+```
+Didn't have time to do a proper join with the tables, but here's the shortcut ^^^ ;) (I'm overworked as is, with 5 Uni courses + this!!)
+
+```
++------------+-------------------+
+|PULocationID|count(PULocationID)|
++------------+-------------------+
+|        null|                  0|
+|           2|                  1|
+|         105|                  2|
+|         111|                  5|
+```
+Manually looking for what PULocationID number 2 is ... I get: **Jamaica Bay.**
+
+![image](https://github.com/kanewilliams/ZoomCamp2024-HW/assets/5062932/c5d8629e-e003-4674-aaa1-5db1c62b77e9)
+
+
 
 
 ## Submitting the solutions
