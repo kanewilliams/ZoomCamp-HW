@@ -10,10 +10,10 @@
 - [Week 5](Data%20Engineering/Week5.md) Batch Processing with **Spark**
 - [Workshop1.ipynb](Data%20Engineering/Workshop1.ipynb) Data Loading with **dlt**
 
-## Stock Markets Analysis | April -> ? 2024
+## Stock Analytics | April -> ? 2024
 
-- [Module 1](Stock%20Analysis/Module1.ipynb) Introduction and Data Sources with **yfinance**
-- [Module 2](Stock%20Analysis/Module2.ipynb) Working with the Data (in Pandas) **TODO**
-- [Module 3](Stock%20Analysis/Module3.ipynb) Analytical Modeling **TODO**
-- [Module 4](Stock%20Analysis/Module4.ipynb) Trading Strategy and Simulation **TODO**
-- [Module 5](Stock%20Analysis/Module5.ipynb) Deployment and Automation **TODO**
+- [Module 1](Stock%20Market%20Analysis/Module01_HW.ipynb) Introduction and Data Sources with **yfinance**
+- [Module 2](Stock%20Market%20Analysis/Module02_HW.ipynb) Working with the Data (in Pandas) **TODO**
+- [Module 3](Stock%20Market%20Analysis/Module03_HW.ipynb) Analytical Modeling **TODO**
+- [Module 4](Stock%20Market%20Analysis/Module04_HW.ipynb) Trading Strategy and Simulation **TODO**
+- [Module 5](Stock%20Market%20Analysis/Module05_HW.ipynb) Deployment and Automation **TODO**
