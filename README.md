@@ -1,4 +1,4 @@
-# DataClubs.Talk Zoomcamp 2024 Homework
+a# DataClubs.Talk Zoomcamp 2024 Homework
 ## Completed by Kane Williams
 
 ## Data Engineering | January -> April 2024.
@@ -14,6 +14,6 @@
 
 - [Module 1](Stock%20Market%20Analytics/Module01_HW.ipynb) Introduction and Data Sources with **yfinance**
 - [Module 2](Stock%20Market%20Analytics/Module02_HW.ipynb) Working with the Data (in **Pandas**)
-- [Module 3](Stock%20Market%20Analytics/Module03_HW.ipynb) Analytical Modeling **TODO**
-- [Module 4](Stock%20Market%20Analytics/Module04_HW.ipynb) Trading Strategy and Simulation **TODO**
-- [Module 5](Stock%20Market%20Analytics/Module05_HW.ipynb) Deployment and Automation **TODO**
+- [Module 3](Stock%20Market%20Analytics/Module03_HW.ipynb) Analytical Modeling
+- ~~[Module 4](Stock%20Market%20Analytics/Module04_HW.ipynb) Trading Strategy and Simulation~~
+- ~~[Module 5](Stock%20Market%20Analytics/Module05_HW.ipynb) Deployment and Automation~~
