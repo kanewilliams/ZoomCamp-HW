@@ -2,9 +2,8 @@
     "name": "LLM-Zoomcamp",
     "image": "mcr.microsoft.com/devcontainers/python:3.9",
     "features": {
-        "ghcr.io/devcontainers/features/python:1": {
-            "installTools": true
-        }
+        "ghcr.io/devcontainers/features/python:1": {},
+        "ghcr.io/devcontainers/features/docker-in-docker:2": {}
     },
     "customizations": {
         "vscode": {
