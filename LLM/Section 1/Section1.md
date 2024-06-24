@@ -1,5 +1,7 @@
 ## Week 5 Homework ([Link]([https://github.com/DataTalksClub/llm-zoomcamp/blob/main/cohorts/2024/01-intro/homework.md)))
 
+SEE ([rag-intro.ipynb](rag-intro.ipynb)) for code.
+
 ## Q1. Running Elastic 
 
 Run Elastic Search 8.4.3, and get the cluster information. If you run it on localhost, this is how you do it:
