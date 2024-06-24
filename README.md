@@ -20,4 +20,5 @@ a# DataClubs.Talk Zoomcamp 2024 Homework
 
 ## Large Language Models (LLM) | June -> ? 2024
 
-- [Week 1](LLM/rag-intro.ipynb) **Introduction**
+- [Section 1](LLM/Section%201/Section1.md) **OpenAI/Groq/ElasticSearch**
+- [Section 2](LLM/Section%202/Section2.md) **Open-source LLMs**
