@@ -1,6 +1,6 @@
-## Week 1 Homework ([Link]([https://github.com/DataTalksClub/llm-zoomcamp/blob/main/cohorts/2024/02-open-source/homework.md)))
+## Week 5 Homework ([Link]([https://github.com/DataTalksClub/llm-zoomcamp/blob/main/cohorts/2024/01-intro/homework.md)))
 
-(Note: See rag-intro.ipynb for code)
+SEE ([rag-intro.ipynb](rag-intro.ipynb)) for code.
 
 ## Q1. Running Elastic 
 

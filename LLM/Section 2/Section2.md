@@ -1,191 +1,204 @@
-## Week 5 Homework ([Link]([https://github.com/DataTalksClub/llm-zoomcamp/blob/main/cohorts/2024/01-intro/homework.md)))
+## Week 2 - Open Source LLM - Homework ([Link]([https://github.com/DataTalksClub/llm-zoomcamp/blob/main/cohorts/2024/02-open-source/homework.md))
 
-SEE ([rag-intro.ipynb](rag-intro.ipynb)) for code.
 
-## Q1. Running Elastic 
+## Q1. Running Ollama with Docker
 
-Run Elastic Search 8.4.3, and get the cluster information. If you run it on localhost, this is how you do it:
-
-```bash
-curl localhost:9200
-```
-
-What's the `version.build_hash` value?
-
-**ANSWER: 42f05b9372a9a4a470db3b52817899b99a76ee73**
-
-## Getting the data
-
-Now let's get the FAQ data. You can run this snippet:
-
-```python
-import requests 
-
-docs_url = 'https://github.com/DataTalksClub/llm-zoomcamp/blob/main/01-intro/documents.json?raw=1'
-docs_response = requests.get(docs_url)
-documents_raw = docs_response.json()
-
-documents = []
-
-for course in documents_raw:
-    course_name = course['course']
-
-    for doc in course['documents']:
-        doc['course'] = course_name
-        documents.append(doc)
-```
-
-Note that you need to have the `requests` library:
+Let's run ollama with Docker. We will need to execute the 
+same command as in the lectures:
 
 ```bash
-pip install requests
+docker run -it \
+    --rm \
+    -v ollama:/root/.ollama \
+    -p 11434:11434 \
+    --name ollama \
+    ollama/ollama
 ```
 
-## Q2. Indexing the data
+What's the version of ollama client? 
 
-Index the data in the same way as was shown in the course videos. Make the `course` field a keyword and the rest should be text. 
+To find out, enter the container and execute `ollama` with the `-v` flag.
 
-Don't forget to install the ElasticSearch client for Python:
+### ANSWER:
 
 ```bash
-pip install elasticsearch
+@kanewilliams ➜ /workspaces/ZoomCamp2024-HW (main) $ ollama -v
+ollama version is 0.1.48
 ```
 
-Which function do you use for adding your data to elastic?
-
-* `insert`
-* **`index`** <<
-* `put`
-* `add`
-
-## Q3. Searching
-
-Now let's search in our index. 
-
-We will execute a query "How do I execute a command in a running docker container?". 
-
-Use only `question` and `text` fields and give `question` a boost of 4, and use `"type": "best_fields"`.
-
-What's the score for the top ranking result?
-
-* 94.05
-* 84.05
-* **74.05** << 
-
-Top 5 scores:[**84.050095**, 51.04628, 49.938507, 45.275463, 45.255775]
-* 64.05
-
-Look at the `_score` field.
+Version: 0.1.48
 
 
-## Q4. Filtering
+## Q2. Downloading an LLM 
 
-Now let's only limit the questions to `machine-learning-zoomcamp`.
+We will donwload a smaller LLM - gemma:2b. 
 
-Return 3 results. What's the 3rd question returned by the search engine?
-
-* How do I debug a docker container?
-* **How do I copy files from a different folder into docker container’s working directory?**
-* How do Lambda container images work?
-* How can I annotate a graph?
-
-**ANSWER:**
-
-- RESULT:{'text': 'You can copy files from your local machine into a Docker container using the docker cp command. Here\'s how to ...
-
-## Q5. Building a prompt
-
-Now we're ready to build a prompt to send to an LLM. 
-
-Take the records returned from Elasticsearch in Q4 and use this template to build the context. Separate context entries by two linebreaks (`\n\n`)
-```python
-context_template = """
-Q: {question}
-A: {text}
-""".strip()
-```
-
-Now use the context you just created along with the "How do I execute a command in a running docker container?" question 
-to construct a prompt using the template below:
-
-```
-prompt_template = """
-You're a course teaching assistant. Answer the QUESTION based on the CONTEXT from the FAQ database.
-Use only the facts from the CONTEXT when answering the QUESTION.
-
-QUESTION: {question}
-
-CONTEXT:
-{context}
-""".strip()
-```
-
-What's the length of the resulting prompt? (use the `len` function)
-
-* 962
-* 1462
-* 1962
-* **2462**
-
-(It's around 2700)
-
-## Q6. Tokens
-
-When we use the OpenAI Platform, we're charged by the number of 
-tokens we send in our prompt and receive in the response.
-
-The OpenAI python package uses `tiktoken` for tokenization:
+Again let's enter the container and pull the model:
 
 ```bash
-pip install tiktoken
+ollama pull gemma:2b
 ```
 
-Let's calculate the number of tokens in our query: 
+In docker, it saved the results into `/root/.ollama`
+
+We're interested in the metadata about this model. You can find
+it in `models/manifests/registry.ollama.ai/library`
+
+What's the content of the file related to gemma?
+
+### ANSWER
+
+```bash
+
+root@68ed54a8dfed:~/.ollama/models/manifests/registry.ollama.ai/library/gemma# ls
+2b
+root@68ed54a8dfed:~/.ollama/models/manifests/registry.ollama.ai/library/gemma# cat 2b
+{"schemaVersion":2,"mediaType":"application/vnd.docker.distribution.manifest.v2+json","config":{"mediaType":"application/vnd.docker.container.image.v1+json","digest":"sha256:887433b89a901c156f7e6944442f3c9e57f3c55d6ed52042cbb7303aea994290","size":483},"layers":[{"mediaType":"application/vnd.ollama.image.model","digest":"sha256:c1864a5eb19305c40519da12cc543519e48a0697ecd30e15d5ac228644957d12","size":1678447520},{"mediaType":"application/vnd.ollama.image.license","digest":"sha256:097a36493f718248845233af1d3fefe7a303f864fae13bc31a3a9704229378ca","size":8433},{"mediaType":"application/vnd.ollama.image.template","digest":"sha256:109037bec39c0becc8221222ae23557559bc594290945a2c4221ab4f303b8871","size":136},{"mediaType":"application/vnd.ollama.image.params","digest":"sha256:22a838ceb7fb22755a3b0ae9b4eadde629d19be1f651f73efb8c6b4e2cd0eea0","size":84}]}
+root@68ed54a8dfed:~/.ollama/models/manifests/registry.ollama.ai/library/gemma# 
+```
+
+## Q3. Running the LLM
+
+Test the following prompt: "10 * 10". What's the answer?
+
+### ANSWER:
+
+```
+ To solve this, you simply multiply the numbers together. Therefore:
+
+
+10 * 1 end with zero because it's a multiple of ten. The result is straightforward and can be easily calculated as follows:
+
+
+10 * 1 = 10
+
+
+So, when we compute \(10 \times 10\), the product also ends with zero due to this property of multiplication involving tens (which always produces a number ending in at least one '0'). Performing the calculation gives us:
+
+
+10 * 1 = 10
+```
+
+## Q4. Downloading the weights 
+
+We don't want to pull the weights every time we run
+a docker container. Let's do it once and have them available
+every time we start a container.
+
+First, we will need to change how we run the container.
+
+Instead of mapping the `/root/.ollama` folder to a named volume,
+let's map it to a local directory:
+
+```bash
+mkdir ollama_files
+
+docker run -it \
+    --rm \
+    -v ./ollama_files:/root/.ollama \
+    -p 11434:11434 \
+    --name ollama \
+    ollama/ollama
+```
+
+Now pull the model:
+
+```bash
+docker exec -it ollama ollama pull gemma:2b 
+```
+
+What's the size of the `ollama_files/models` folder? 
+
+* 0.6G
+* 1.2G
+* **1.7G**
+* 2.2G
+
+### ANSWER:
+
+```bash
+@kanewilliams ➜ /workspaces/ZoomCamp2024-HW (main) $ du -h
+1.6G    ./ollama_files/models/blobs
+8.0K    ./ollama_files/models/manifests/registry.ollama.ai/library/gemma
+12K     ./ollama_files/models/manifests/registry.ollama.ai/library
+16K     ./ollama_files/models/manifests/registry.ollama.ai
+20K     ./ollama_files/models/manifests
+1.6G    ./ollama_files/models <<<<<<
+```
+
+## Q5. Adding the weights 
+
+Let's now stop the container and add the weights 
+to a new image
+
+For that, let's create a `Dockerfile`:
+
+```dockerfile
+FROM ollama/ollama
+
+COPY ...
+```
+
+What do you put after `COPY`?
+
+### ANSWER:
+
+```
+ollama_files/models /root/.ollama/models
+```
+To move from the local `obama_files/models`, to docker's directory.
+
+## Q6. Serving it 
+
+Let's build it:
+
+```bash
+docker build -t ollama-gemma2b .
+```
+
+And run it:
+
+```bash
+docker run -it --rm -p 11434:11434 ollama-gemma2b
+```
+
+We can connect to it using the OpenAI client
+
+Let's test it with the following prompt:
 
 ```python
-encoding = tiktoken.encoding_for_model("gpt-4o")
+prompt = "What's the formula for energy?"
 ```
 
-Use the `encode` function. How many tokens does our prompt have?
+Also, to make results reproducible, set the `temperature` parameter to 0:
 
-* 122
-* 222
-* 322
-* **422** <<
+```bash
+response = client.chat.completions.create(
+    #...
+    temperature=0.0
+)
+```
 
-Note: to decode back a token into a word, you can use the `decode_single_token_bytes` function:
+How many completion tokens did you get in response?
+
+* 304
+* 604
+* **904**
+* 1204
+
+### ANSWER:
 
 ```python
-encoding.decode_single_token_bytes(63842)
+llm("What's the formula for energy?")
+
+# "Sure, here's the formula for energy:\n\n**E = K + U**\n\nWhere:\n\n* **E** is the energy in joules (J)\n* **K** is the kinetic energy in joules (J)\n* **U** is the potential energy in joules (J)\n\n**Kinetic energy (K)** is the energy an object possesses when it moves or is in motion. It is calculated as half the product of an object's mass (m) and its velocity (v) squared:\n\n**K = 1/2mv^2**\n\n**Potential energy (U)** is the energy an object possesses due to its position or configuration. It is calculated as the product of an object's mass, gravitational constant (g), and height or position above a reference point.\n\n**U = mgh**\n\nWhere:\n\n* **m** is the mass in kilograms (kg)\n* **g** is the gravitational constant (9.8 m/s^2)\n* **h** is the height or position in meters (m)\n\nThe formula shows that energy can be expressed as the sum of kinetic and potential energy. The kinetic energy is a measure of the object's ability to do work, while the potential energy is a measure of the object's ability to do work against a force."
 ```
 
-**(I got 621... probably did it wrong hahaha)**
-
-## Bonus: generating the answer (ungraded)
-
-Let's send the prompt to OpenAI. What's the response?  
-
-Note: you can replace OpenAI with Ollama. See module 2.
-
-ANSWER: **'According to the CONTEXT, you can execute a command in a running docker container using the following command:\n\n```\ndocker exec -it <container-id> bash\n```\n\nReplace `<container-id>` with the actual ID of the container you want to execute the command in.'**
-
-## Bonus: calculating the costs (ungraded)
-
-Suppose that on average per request we send 150 tokens and receive back 250 tokens.
-
-How much will it cost to run 1000 requests?
-
-You can see the prices [here](https://openai.com/api/pricing/)
-
-On June 17, the prices for gpt4o are:
-
-* Input: $0.005 / 1K tokens
-* Output: $0.015 / 1K tokens
-
-You can redo the calculations with the values you got in Q6 and Q7.
-
+```python
+len(_) # 1020
+```
 
 ## Submit the results
 
-* Submit your results here: https://courses.datatalks.club/llm-zoomcamp-2024/homework/hw1
+* Submit your results here: https://courses.datatalks.club/llm-zoomcamp-2024/homework/hw2
 * It's possible that your answers won't match exactly. If it's the case, select the closest one.

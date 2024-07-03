@@ -1,4 +1,4 @@
-a# DataClubs.Talk Zoomcamp 2024 Homework
+# DataClubs.Talk Zoomcamp 2024 Homework
 ## Completed by Kane Williams
 
 ## Data Engineering | January -> April 2024.
@@ -12,13 +12,15 @@ a# DataClubs.Talk Zoomcamp 2024 Homework
 
 ## Stock Analytics | April -> May 2024
 
-- [Module 1](Stock%20Market%20Analytics/Module01_HW.ipynb) Introduction and Data Sources with **yfinance**
-- [Module 2](Stock%20Market%20Analytics/Module02_HW.ipynb) Working with the Data (in **Pandas**)
+- [Module 1](Stock%20Market%20Analytics/Module01_HW.ipynb) Introduction to **yfinance**
+- [Module 2](Stock%20Market%20Analytics/Module02_HW.ipynb) Working with Time Series (in **Pandas**)
 - [Module 3](Stock%20Market%20Analytics/Module03_HW.ipynb) Analytical Modeling
 - ~~[Module 4](Stock%20Market%20Analytics/Module04_HW.ipynb) Trading Strategy and Simulation~~
 - ~~[Module 5](Stock%20Market%20Analytics/Module05_HW.ipynb) Deployment and Automation~~
 
 ## Large Language Models (LLM) | June -> ? 2024
 
-- [Section 1](LLM/Section%201/Section1.md) **OpenAI/Groq/ElasticSearch**
+- [Section 1](LLM/Section%201/Section1.md) **OpenAI/ElasticSearch**
 - [Section 2](LLM/Section%202/Section2.md) **Open-source LLMs**
+- [Section 3](LLM/Section%202/Section3.md) **Vector Retrieval**
+- [Section 4](LLM/Section%202/Section4.md) **TODO**
