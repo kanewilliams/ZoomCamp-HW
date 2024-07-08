@@ -1,191 +1,185 @@
-## Week 5 Homework ([Link]([https://github.com/DataTalksClub/llm-zoomcamp/blob/main/cohorts/2024/01-intro/homework.md)))
+## Homework 3 ([Link]([https://courses.datatalks.club/llm-zoomcamp-2024/homework/hw3)))
 
-SEE ([rag-intro.ipynb](rag-intro.ipynb)) for code.
+## Homework: Vector Search
 
-## Q1. Running Elastic 
+In this homework, we'll experiemnt with vector with and without Elasticsearch
 
-Run Elastic Search 8.4.3, and get the cluster information. If you run it on localhost, this is how you do it:
+> It's possible that your answers won't match exactly. If it's the case, select the closest one.
+
+
+## Q1. Getting the embeddings model
+
+First, we will get the embeddings model `multi-qa-distilbert-cos-v1` from
+[the Sentence Transformer library](https://www.sbert.net/docs/sentence_transformer/pretrained_models.html#model-overview)
 
 ```bash
-curl localhost:9200
+from sentence_transformers import SentenceTransformer
+embedding_model = SentenceTransformer(model_name)
 ```
 
-What's the `version.build_hash` value?
+Create the embedding for this user question:
 
-**ANSWER: 42f05b9372a9a4a470db3b52817899b99a76ee73**
+```python
+user_question = "I just discovered the course. Can I still join it?"
+```
 
-## Getting the data
+What's the first value of the resulting vector?
 
-Now let's get the FAQ data. You can run this snippet:
+* -0.24
+* -0.04
+* **0.07** (Specifically, $7.82\times10^{-2}$)
+* 0.27
+
+
+## Prepare the documents
+
+Now we will create the embeddings for the documents.
+
+Load the documents with ids that we prepared in the module:
 
 ```python
 import requests 
 
-docs_url = 'https://github.com/DataTalksClub/llm-zoomcamp/blob/main/01-intro/documents.json?raw=1'
+base_url = 'https://github.com/DataTalksClub/llm-zoomcamp/blob/main'
+relative_url = '03-vector-search/eval/documents-with-ids.json'
+docs_url = f'{base_url}/{relative_url}?raw=1'
 docs_response = requests.get(docs_url)
-documents_raw = docs_response.json()
-
-documents = []
-
-for course in documents_raw:
-    course_name = course['course']
-
-    for doc in course['documents']:
-        doc['course'] = course_name
-        documents.append(doc)
+documents = docs_response.json()
 ```
 
-Note that you need to have the `requests` library:
+We will use only a subset of the questions - the questions
+for `"machine-learning-zoomcamp"`. After filtering, you should
+have only 375 documents
 
-```bash
-pip install requests
-```
+## Q2. Creating the embeddings
 
-## Q2. Indexing the data
+Now for each document, we will create an embedding for both question and answer fields.
 
-Index the data in the same way as was shown in the course videos. Make the `course` field a keyword and the rest should be text. 
+We want to put all of them into a single matrix `X`:
 
-Don't forget to install the ElasticSearch client for Python:
+- Create a list `embeddings` 
+- Iterate over each document 
+- `qa_text = f'{question} {text}'`
+- compute the embedding for `qa_text`, append to `embeddings`
+- At the end, let `X = np.array(embeddings)` (`import numpy as np`) 
 
-```bash
-pip install elasticsearch
-```
-
-Which function do you use for adding your data to elastic?
-
-* `insert`
-* **`index`** <<
-* `put`
-* `add`
-
-## Q3. Searching
-
-Now let's search in our index. 
-
-We will execute a query "How do I execute a command in a running docker container?". 
-
-Use only `question` and `text` fields and give `question` a boost of 4, and use `"type": "best_fields"`.
-
-What's the score for the top ranking result?
-
-* 94.05
-* 84.05
-* **74.05** << 
-
-Top 5 scores:[**84.050095**, 51.04628, 49.938507, 45.275463, 45.255775]
-* 64.05
-
-Look at the `_score` field.
+What's the shape of X? (`X.shape`). Include the parantheses. 
 
 
-## Q4. Filtering
 
-Now let's only limit the questions to `machine-learning-zoomcamp`.
+## Q3. Search
 
-Return 3 results. What's the 3rd question returned by the search engine?
+We have the embeddings and the query vector. Now let's compute the 
+cosine similarity between the vector from Q1 (let's call it `v`) and the matrix from Q2. 
 
-* How do I debug a docker container?
-* **How do I copy files from a different folder into docker container’s working directory?**
-* How do Lambda container images work?
-* How can I annotate a graph?
+The vectors returned from the embedding model are already
+normalized (you can check it by computing a dot product of a vector
+with itself - it should return 1.0). This means that in order
+to compute the coside similarity, it's sufficient to 
+multiply the matrix `X` by the vector `v`:
 
-**ANSWER:**
-
-- RESULT:{'text': 'You can copy files from your local machine into a Docker container using the docker cp command. Here\'s how to ...
-
-## Q5. Building a prompt
-
-Now we're ready to build a prompt to send to an LLM. 
-
-Take the records returned from Elasticsearch in Q4 and use this template to build the context. Separate context entries by two linebreaks (`\n\n`)
-```python
-context_template = """
-Q: {question}
-A: {text}
-""".strip()
-```
-
-Now use the context you just created along with the "How do I execute a command in a running docker container?" question 
-to construct a prompt using the template below:
-
-```
-prompt_template = """
-You're a course teaching assistant. Answer the QUESTION based on the CONTEXT from the FAQ database.
-Use only the facts from the CONTEXT when answering the QUESTION.
-
-QUESTION: {question}
-
-CONTEXT:
-{context}
-""".strip()
-```
-
-What's the length of the resulting prompt? (use the `len` function)
-
-* 962
-* 1462
-* 1962
-* **2462**
-
-(It's around 2700)
-
-## Q6. Tokens
-
-When we use the OpenAI Platform, we're charged by the number of 
-tokens we send in our prompt and receive in the response.
-
-The OpenAI python package uses `tiktoken` for tokenization:
-
-```bash
-pip install tiktoken
-```
-
-Let's calculate the number of tokens in our query: 
 
 ```python
-encoding = tiktoken.encoding_for_model("gpt-4o")
+scores = X.dot(v)
 ```
 
-Use the `encode` function. How many tokens does our prompt have?
+What's the highest score in the results?
 
-* 122
-* 222
-* 322
-* **422** <<
+- 65.0 
+- 6.5
+- 0.65
+- 0.065
 
-Note: to decode back a token into a word, you can use the `decode_single_token_bytes` function:
+
+## Vector search
+
+We can now compute the similarity between a query vector and all the embeddings.
+
+Let's use this to implement our own vector search
 
 ```python
-encoding.decode_single_token_bytes(63842)
+class VectorSearchEngine():
+    def __init__(self, documents, embeddings):
+        self.documents = documents
+        self.embeddings = embeddings
+
+    def search(self, v_query, num_results=10):
+        scores = self.embeddings.dot(v_query)
+        idx = np.argsort(-scores)[:num_results]
+        return [self.documents[i] for i in idx]
+
+search_engine = VectorSearchEngine(documents=documents, embeddings=X)
+search_engine.search(v, num_results=5)
 ```
 
-**(I got 621... probably did it wrong hahaha)**
+If you don't understand how the `search` function work:
 
-## Bonus: generating the answer (ungraded)
+* Ask ChatGTP or any other LLM of your choice to explain the code
+* Check our pre-course workshop about implementing a search engine [here](https://github.com/alexeygrigorev/build-your-own-search-engine)
 
-Let's send the prompt to OpenAI. What's the response?  
+(Note: you can replace `argsort` with `argpartition` to make it a lot faster)
 
-Note: you can replace OpenAI with Ollama. See module 2.
 
-ANSWER: **'According to the CONTEXT, you can execute a command in a running docker container using the following command:\n\n```\ndocker exec -it <container-id> bash\n```\n\nReplace `<container-id>` with the actual ID of the container you want to execute the command in.'**
+## Q4. Hit-rate for our search engine
 
-## Bonus: calculating the costs (ungraded)
+Let's evaluate the performance of our own search engine. We will
+use the hitrate metric for evaluation.
 
-Suppose that on average per request we send 150 tokens and receive back 250 tokens.
+First, load the ground truth dataset:
 
-How much will it cost to run 1000 requests?
+```python
+import pandas as pd
 
-You can see the prices [here](https://openai.com/api/pricing/)
+base_url = 'https://github.com/DataTalksClub/llm-zoomcamp/blob/main'
+relative_url = '03-vector-search/eval/ground-truth-data.csv'
+ground_truth_url = f'{base_url}/{relative_url}?raw=1'
 
-On June 17, the prices for gpt4o are:
+df_ground_truth = pd.read_csv(ground_truth_url)
+df_ground_truth = df_ground_truth[df_ground_truth.course == 'machine-learning-zoomcamp']
+ground_truth = df_ground_truth.to_dict(orient='records')
+```
 
-* Input: $0.005 / 1K tokens
-* Output: $0.015 / 1K tokens
+Now use the code from the module to calculate the hitrate of
+`VectorSearchEngine` with `num_results=5`.
 
-You can redo the calculations with the values you got in Q6 and Q7.
+What did you get?
+
+* 0.93
+* 0.73
+* 0.53
+* 0.33
+
+## Q5. Indexing with Elasticsearch
+
+Now let's index these documents with elasticsearch
+
+* Create the index with the same settings as in the module (but change the dimensions)
+* Index the embeddings (note: you've already computed them)
+
+After indexing, let's perform the search of the same query from Q1.
+
+What's the ID of the document with the highest score?
+
+## Q6. Hit-rate for Elasticsearch
+
+The search engine we used in Q4 computed the similarity between
+the query and ALL the vectors in our database. Usually this is 
+not practical, as we may have a lot of data.
+
+Elasticsearch uses approximate techniques to make it faster. 
+
+Let's evaluate how worse the results are when we switch from
+exact search (as in Q4) to approximate search with Elastic.
+
+What's hitrate for our dataset for Elastic?
+
+* 0.93
+* 0.73
+* 0.53
+* 0.33
 
 
 ## Submit the results
 
-* Submit your results here: https://courses.datatalks.club/llm-zoomcamp-2024/homework/hw1
+* Submit your results here: https://courses.datatalks.club/llm-zoomcamp-2024/homework/hw3
 * It's possible that your answers won't match exactly. If it's the case, select the closest one.
