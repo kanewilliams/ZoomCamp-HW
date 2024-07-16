@@ -1,8 +1,10 @@
 ## Homework 3 ([Link]([https://courses.datatalks.club/llm-zoomcamp-2024/homework/hw3)))
 
+VIEW CODE FOR FILE IN: [evaluate-vector.ipynb](evaluate-vector.ipynb)
+
 ## Homework: Vector Search
 
-In this homework, we'll experiemnt with vector with and without Elasticsearch
+In this homework, we'll experiment with vector with and without Elasticsearch
 
 > It's possible that your answers won't match exactly. If it's the case, select the closest one.
 
@@ -65,6 +67,12 @@ We want to put all of them into a single matrix `X`:
 
 What's the shape of X? (`X.shape`). Include the parantheses. 
 
+### ANSWER: 
+
+```python
+(375, 768)
+```
+
 
 
 ## Q3. Search
@@ -87,8 +95,16 @@ What's the highest score in the results?
 
 - 65.0 
 - 6.5
-- 0.65
+- **0.65**
 - 0.065
+
+### ANSWER:
+
+```python
+v = user_question
+scores = X.dot(v)
+max(scores) #0.6507
+```
 
 
 ## Vector search
@@ -144,7 +160,7 @@ Now use the code from the module to calculate the hitrate of
 
 What did you get?
 
-* 0.93
+* **0.93**
 * 0.73
 * 0.53
 * 0.33
@@ -160,6 +176,32 @@ After indexing, let's perform the search of the same query from Q1.
 
 What's the ID of the document with the highest score?
 
+```python
+q = {}
+q['question'] = query
+q['course'] = 'machine-learning-zoomcamp'
+
+q # {'question': 'I just discovered the course. Can I still join it?',
+  #  'course': 'machine-learning-zoomcamp'}
+```
+
+QUERY:
+```python
+vector_combined_knn(q)
+```
+
+OUTPUT:
+```
+[{'text': 'Yes, you can. You won’t be able to submit some of the homeworks, but you can still take part in the course.\nIn order to get a certificate, you need to submit 2 out of 3 course projects and review 3 peers’ Projects by the deadline. It means that if you join the course at the end of November and manage to work on two projects, you will still be eligible for a certificate.',
+  'section': 'General course-related questions',
+  'question': 'The course has already started. Can I still join it?',
+  'course': 'machine-learning-zoomcamp',
+  'id': 'ee58a693'},
+ {'text': 'Welcome to the course! Go to the ...
+ ```
+
+Therefore the answer is **ee58a692**. :-)
+
 ## Q6. Hit-rate for Elasticsearch
 
 The search engine we used in Q4 computed the similarity between
@@ -173,7 +215,7 @@ exact search (as in Q4) to approximate search with Elastic.
 
 What's hitrate for our dataset for Elastic?
 
-* 0.93
+* **0.93**
 * 0.73
 * 0.53
 * 0.33
