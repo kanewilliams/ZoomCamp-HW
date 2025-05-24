@@ -5,6 +5,7 @@ description = "uv files for MLOps zoomcamp :-)"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
+    "django>=5.2.1",
     "marimo>=0.13.10",
     "matplotlib>=3.10.3",
     "numpy>=2.2.6",
