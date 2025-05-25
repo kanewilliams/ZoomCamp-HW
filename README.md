@@ -28,5 +28,8 @@
 
 ## MLOps | May -> ? 2025
 
-- [Section 1](25-MLOps/Section%201/Section1.md) Introduction to **MLOps** (**TODO**)
-- [Section 2](25-MLOps/Section%201/Section1.md) Experiment Tracking with **MLFlow** (**TODO**)
+- [Section 1](TBD) Introduction to **MLOps**
+- [Section 2](TBD) Experiment Tracking with **MLFlow**
+- [Section 3](TBD) Orchestration with **Airflow(?)** (TODO)
+- [Section 4](TBD) Deployment with **Flask and AWS Kinesis+Lambda** (TODO)
+- [Section 5](TBD) Experiment Tracking with **Grafana** and **Evidently** (TODO)
