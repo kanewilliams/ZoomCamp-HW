@@ -1,0 +1,15 @@
+artifact_uri: file:///mnt/c/Users/thebu/source/repos/ZoomCamp-HW/25-MLOps/Module02/mlruns/0/80f2308731244206a05ef17f7551a3c5/artifacts
+end_time: 1748158528705
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 80f2308731244206a05ef17f7551a3c5
+run_name: enchanting-bee-10
+run_uuid: 80f2308731244206a05ef17f7551a3c5
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1748158457422
+status: 3
+tags: []
+user_id: kanewsl

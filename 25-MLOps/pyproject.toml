@@ -5,10 +5,15 @@ description = "uv files for MLOps zoomcamp :-)"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
+    "click>=8.1.8",
     "django>=5.2.1",
+    "hyperopt>=0.2.7",
     "marimo>=0.13.10",
     "matplotlib>=3.10.3",
+    "mlflow==2.22.0",
     "numpy>=2.2.6",
     "pandas>=2.2.3",
-    "pyarrow>=20.0.0",
+    "protobuf<4.0.0",
+    "scikit-learn>=1.6.1",
+    "setuptools>=80.8.0",
 ]

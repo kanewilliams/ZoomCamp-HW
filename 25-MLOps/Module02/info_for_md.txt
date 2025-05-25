@@ -1,0 +1,22 @@
+# Q2 
+
+python3 ./Module02/preprocess_data.py --raw_data_path ./data/green/ --dest_path ./data_preprocessed/
+
+# Q3
+
+start with
+
+`mlflow ui` in the Module02 directory
+
+
+# Q4 
+
+# Create artifacts directory
+mkdir artifacts
+
+# Launch MLflow tracking server
+mlflow server \
+    --backend-store-uri sqlite:///mlflow.db \
+    --default-artifact-root ./artifacts \
+    --host 0.0.0.0 \
+    --port 5000

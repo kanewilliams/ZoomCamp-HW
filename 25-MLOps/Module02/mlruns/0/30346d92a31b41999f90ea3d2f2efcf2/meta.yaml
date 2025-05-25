@@ -1,0 +1,15 @@
+artifact_uri: file:///mnt/c/Users/thebu/source/repos/ZoomCamp-HW/25-MLOps/Module02/mlruns/0/30346d92a31b41999f90ea3d2f2efcf2/artifacts
+end_time: 1748157898139
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 30346d92a31b41999f90ea3d2f2efcf2
+run_name: angry-loon-772
+run_uuid: 30346d92a31b41999f90ea3d2f2efcf2
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1748157763107
+status: 4
+tags: []
+user_id: kanewsl

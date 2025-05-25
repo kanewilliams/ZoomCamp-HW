@@ -6,7 +6,7 @@ import numpy as np
 from hyperopt import STATUS_OK, Trials, fmin, hp, tpe
 from hyperopt.pyll import scope
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.metrics import mean_squared_error
+from sklearn.metrics import root_mean_squared_error
 
 mlflow.set_tracking_uri("http://127.0.0.1:5000")
 mlflow.set_experiment("random-forest-hyperopt")
@@ -20,7 +20,7 @@ def load_pickle(filename: str):
 @click.command()
 @click.option(
     "--data_path",
-    default="./output",
+    default="../data_preprocessed",
     help="Location where the processed NYC taxi trip data was saved"
 )
 @click.option(
@@ -35,12 +35,20 @@ def run_optimization(data_path: str, num_trials: int):
 
     def objective(params):
 
-        rf = RandomForestRegressor(**params)
-        rf.fit(X_train, y_train)
-        y_pred = rf.predict(X_val)
-        rmse = mean_squared_error(y_val, y_pred, squared=False)
+        with mlflow.start_run():
 
-        return {'loss': rmse, 'status': STATUS_OK}
+            rf = RandomForestRegressor(**params)
+            rf.fit(X_train, y_train)
+            y_pred = rf.predict(X_val)
+            rmse = root_mean_squared_error(y_val, y_pred)
+
+            ### (I added this) #################################################
+            mlflow.log_params(params)
+            mlflow.log_metric("rmse", rmse)
+            mlflow.sklearn.log_model(rf, artifact_path="model")
+            ####################################################################
+
+            return {'loss': rmse, 'status': STATUS_OK}
 
     search_space = {
         'max_depth': scope.int(hp.quniform('max_depth', 1, 20, 1)),
