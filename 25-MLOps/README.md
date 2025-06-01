@@ -1,8 +1,11 @@
 # MLOps Learning Journey
 
 ## Table of Contents
-- [Module01](##module01)
-- [Module02](##module02)
+- [Module01 - Introduction](##module01)
+- [Module02 - Experiment Tracking](##module02)
+- [Module03 - Orchestration](##module03)
+- [Module04 - TODO](##module04)
+- [Module05 - TODO](##module05)
 - [Django Practice](##django-practice)
 
 ## Module01:
@@ -60,9 +63,23 @@ mlflow server \
 
 ## Module03
 
-**TODO**
+This module will use:
 
-Orchestration. Possibly Prefect?
+- [polars](https://pola.rs) - a modern pandas alternative
+
+- [Prefect](https://www.prefect.io) - as the orchestrator
+
+
+I used **Mage** in the DE Zoomcamp, so out of the "main" alternatives (Airflow/Prefect/Dagster) went with **Prefect**.
+
+Why? 
+
+Recall that I want to eventually forecast horse race winners:
+
+1) Airflow appeared too clunky+heavy duty for project, and
+2) Dagster's asset-based approach is not as natural (says Claude) for horse-race forecasting compared with Prefect's task-based approach.
+
+Let's try it and see!
 
 ## Module04
 
