@@ -1,0 +1,100 @@
+# Horse Racing Scraping Configuration
+# 
+# LEARNING PURPOSE: Configuration as code for different environments
+# This file demonstrates how to manage scraping parameters externally
+
+scraping:
+  # Global scraping settings
+  global:
+    respect_robots_txt: true
+    default_delay: 2.0
+    max_delay: 5.0
+    timeout_seconds: 30
+    max_retries: 3
+    user_agent: "Mozilla/5.0 (compatible; HorseRacing-MLOps-Student/1.0)"
+    
+  # TAB New Zealand configuration
+  tab_nz:
+    base_url: "https://www.tab.co.nz"
+    delay_between_requests: 2.0  # Be extra respectful
+    max_delay: 4.0
+    
+    # URLs for different data types
+    urls:
+      daily_racing: "/racing/today"
+      racing_calendar: "/racing/calendar"
+      results: "/racing/results"
+      # TODO FOR STUDENT: Find actual URL patterns from TAB.nz
+      specific_date: "/racing/{date}"  # Format: YYYY-MM-DD
+      
+    # CSS selectors for data extraction
+    # TODO FOR STUDENT: Replace with actual selectors from TAB.nz
+    selectors:
+      race_cards: ".race-card"  # UPDATE THIS
+      race_time: ".race-time"   # UPDATE THIS
+      race_number: ".race-number"  # UPDATE THIS
+      track_name: ".track-name"   # UPDATE THIS
+      horse_list: ".horse-entry"  # UPDATE THIS
+      horse_name: ".horse-name"   # UPDATE THIS
+      jockey_name: ".jockey-name"  # UPDATE THIS
+      odds: ".odds"              # UPDATE THIS
+      barrier: ".barrier"        # UPDATE THIS
+      
+    # Rate limiting
+    rate_limit:
+      requests_per_minute: 20
+      burst_limit: 5
+      
+  # Trackside NZ configuration (backup source)
+  trackside_nz:
+    base_url: "https://www.trackside.co.nz"
+    delay_between_requests: 1.5
+    max_delay: 3.0
+    
+    urls:
+      # TODO FOR STUDENT: Research Trackside URLs
+      racing_today: "/racing/today"
+      
+  # Racing.com configuration (international backup)
+  racing_com:
+    base_url: "https://www.racing.com"
+    delay_between_requests: 1.0
+    max_delay: 2.0
+    
+    urls:
+      # TODO FOR STUDENT: Research Racing.com URLs for NZ content
+      nz_racing: "/racing/new-zealand"
+
+# Data sources priority order
+source_priority:
+  - "tab_nz"      # Primary source
+  - "trackside_nz"  # Backup
+  - "racing_com"    # International backup
+
+# Quality thresholds
+data_quality:
+  min_races_per_day: 5      # Minimum expected races per day
+  max_races_per_day: 50     # Maximum reasonable races per day
+  required_fields:
+    - "race_time"
+    - "race_number" 
+    - "track"
+    - "source"
+  
+  # Track validation
+  known_nz_tracks:
+    # Major thoroughbred tracks
+    - "Ellerslie"
+    - "Trentham"
+    - "Riccarton"
+    - "Te Rapa"
+    - "Awapuni"
+    - "Otaki"
+    - "Hastings"
+    - "New Plymouth"
+    # TODO FOR STUDENT: Add more NZ tracks as you discover them
+    
+  # Data freshness requirements
+  max_data_age_hours: 25  # Data older than this triggers alerts
+
+# TODO FOR STUDENT: Add more configuration sections as needed

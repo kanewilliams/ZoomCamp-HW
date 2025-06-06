@@ -1,0 +1,127 @@
+# Data Sources Configuration
+#
+# LEARNING PURPOSE: External data source management
+# This demonstrates how to configure multiple data sources and APIs
+
+# Free and public data sources
+public_apis:
+  # TODO FOR STUDENT: Research these potential free data sources
+  racing_nz_official:
+    url: "https://www.racing.nz"
+    description: "Official Racing NZ - check for public APIs or data downloads"
+    api_key_required: false
+    rate_limit: "unknown"
+    data_format: "html"  # Until you find API documentation
+    
+  nz_government_data:
+    url: "https://data.govt.nz"
+    description: "NZ Government open data portal - search for racing datasets"
+    api_key_required: false
+    data_format: "csv/json"
+    
+  # International racing data (for comparison/backup)
+  hong_kong_jockey_club:
+    url: "https://racing.hkjc.com"
+    description: "HKJC has good APIs - study their structure"
+    api_key_required: true
+    rate_limit: "1000/day"
+    
+# Commercial APIs (for reference - likely paid)
+commercial_apis:
+  # These are examples - research actual availability
+  racing_api_providers:
+    - name: "RacingAPI"
+      url: "https://example-racing-api.com"
+      cost: "paid"
+      coverage: "international"
+      
+    - name: "SportRadar"
+      url: "https://sportradar.com"
+      cost: "enterprise"
+      coverage: "global"
+
+# RSS/XML feeds to investigate
+feeds:
+  # TODO FOR STUDENT: Check if these sites offer RSS feeds
+  potential_rss_sources:
+    - "https://www.tab.co.nz/rss"  # Check if exists
+    - "https://www.trackside.co.nz/feeds"  # Check if exists
+    - "https://www.racing.nz/feeds"  # Check if exists
+
+# CSV downloads and bulk data
+bulk_data_sources:
+  # TODO FOR STUDENT: Look for historical data downloads
+  potential_downloads:
+    racing_authorities:
+      - "Racing NZ historical results"
+      - "Harness Racing NZ data"
+      - "Greyhound Racing NZ data"
+      
+    academic_sources:
+      - "University research datasets"
+      - "Kaggle racing datasets"
+      - "GitHub racing data repos"
+
+# Data export formats and schedules
+export_configs:
+  daily_exports:
+    formats: ["parquet", "csv", "json"]
+    schedule: "0 23 * * *"  # 11 PM daily
+    retention_days: 30
+    
+  weekly_summaries:
+    formats: ["parquet", "csv"]
+    schedule: "0 1 * * 1"   # 1 AM Monday
+    retention_weeks: 12
+    
+  monthly_archives:
+    formats: ["parquet"]
+    schedule: "0 2 1 * *"   # 2 AM first of month
+    retention_months: 24
+
+# Integration endpoints
+# TODO FOR STUDENT: Add webhook/API endpoints as you develop them
+integrations:
+  webhooks:
+    data_quality_alerts:
+      url: "https://hooks.slack.com/your-webhook"  # Replace with actual
+      enabled: false
+      
+  databases:
+    # Example configurations for when you scale up
+    postgresql:
+      host: "localhost"
+      port: 5432
+      database: "horse_racing"
+      schema: "raw_data"
+      
+    clickhouse:
+      host: "localhost" 
+      port: 8123
+      database: "racing_analytics"
+      
+# Machine learning data preparation
+ml_configs:
+  feature_store:
+    # TODO FOR STUDENT: Design feature store schema
+    primary_features:
+      - "horse_performance_metrics"
+      - "jockey_statistics" 
+      - "track_conditions"
+      - "market_data"
+      
+    target_variables:
+      - "finish_position"
+      - "win_probability"
+      - "value_bet_indicator"
+      
+  model_training:
+    train_test_split:
+      method: "time_based"  # Important for time series data!
+      train_months: 12
+      validation_months: 2
+      test_months: 1
+      
+    cross_validation:
+      method: "time_series_split"
+      n_splits: 5
