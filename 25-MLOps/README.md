@@ -69,6 +69,8 @@ This module will use:
 
 - [Prefect](https://www.prefect.io) - as the orchestrator
 
+- [Claude CODE](https://docs.anthropic.com/en/docs/claude-code/overview) - as an experiment
+
 
 I used **Mage** in the DE Zoomcamp, so out of the "main" alternatives (Airflow/Prefect/Dagster) went with **Prefect**.
 
@@ -80,6 +82,15 @@ Recall that I want to eventually forecast horse race winners:
 2) Dagster's asset-based approach is not as natural (says Claude) for horse-race forecasting compared with Prefect's task-based approach.
 
 Let's try it and see!
+
+---
+
+#### Results:
+
+- Claude CODE is cool but can easily go out of control.
+- Did not get enough polars experience as I would like, but have a good understanding of tasks and flows in prefect now.
+
+I would need to set everything up properly for the actual project.
 
 ## Module04
 
