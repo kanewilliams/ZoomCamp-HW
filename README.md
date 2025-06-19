@@ -28,8 +28,9 @@
 
 ## MLOps | May -> ? 2025
 
-- [Section 1](25-MLOps/Module01/__marimo__/MLOps_Homework01.html) Introduction to **MLOps**
-- [Section 2](25-MLOps/Module02) Experiment Tracking with **MLFlow**
-- [Section 3](25-MLOps/Module03) Orchestration with **Prefect** 
-- [Section 4](25-MLOps/Module04) Deployment with **Flask and AWS Kinesis+Lambda**
-- [Section 5](TBD) Experiment Tracking with **Grafana** and **Evidently** (TODO)
+- [Module 1](25-MLOps/Module01/__marimo__/MLOps_Homework01.html) Introduction to **MLOps**
+- [Module 2](25-MLOps/Module02) Experiment Tracking with **MLFlow**
+- [Module 3](25-MLOps/Module03) Orchestration with **Prefect** 
+- [Module 4](25-MLOps/Module04/Module04.md) Deployment with **Docker**
+- [Module 5](TBD) Monitoring with **Grafana** and **Evidently** (TODO)
+- [Module 6](TBD) Best practices: **CI/CD**, **Testing**, **Code Quality** (TODO)

@@ -4,7 +4,7 @@
 - [Module01 - Introduction](##module01)
 - [Module02 - Experiment Tracking](##module02)
 - [Module03 - Orchestration](##module03)
-- [Module04 - TODO](##module04)
+- [Module04 - Deployment](##module04)
 - [Module05 - TODO](##module05)
 - [Django Practice](##django-practice)
 
@@ -94,9 +94,25 @@ I would need to set everything up properly for the actual project.
 
 ## Module04
 
-**TODO**
+This module focuses on **batch inference deployment** using Docker containers.
 
-Deployment. Possibly kinesis + lambda?
+[Full homework results and documentation](Module04/Module04.md)
+
+### Key Learning Topics:
+- Converting Jupyter notebooks to production scripts
+- Docker containerization for ML deployment
+- Batch processing vs. online inference
+- Virtual environment management with pipenv
+- Scikit-learn version compatibility issues
+
+### Technologies Used:
+- **Docker**: Containerization and deployment
+- **pipenv**: Virtual environment with lock files
+- **scikit-learn**: ML model (version compatibility critical)
+- **NYC Taxi Dataset**: Real-world batch inference scenario
+
+### Main Achievement:
+Successfully deployed a batch inference pipeline that processes 3.4M taxi trip records and generates predictions in a containerized environment, demonstrating the importance of exact dependency matching between training and inference environments.
 
 ## Module05
 
