@@ -32,5 +32,5 @@
 - [Module 2](25-MLOps/Module02) Experiment Tracking with **MLFlow**
 - [Module 3](25-MLOps/Module03) Orchestration with **Prefect** 
 - [Module 4](25-MLOps/Module04/Module04.md) Deployment with **Docker**
-- [Module 5](TBD) Monitoring with **Grafana** and **Evidently** (TODO)
+- [Module 5](25-MLOps/Module05/homework_answers.md) Monitoring with **Grafana** and **Evidently**
 - [Module 6](TBD) Best practices: **CI/CD**, **Testing**, **Code Quality** (TODO)

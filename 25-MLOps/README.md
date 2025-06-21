@@ -5,7 +5,7 @@
 - [Module02 - Experiment Tracking](##module02)
 - [Module03 - Orchestration](##module03)
 - [Module04 - Deployment](##module04)
-- [Module05 - TODO](##module05)
+- [Module05 - Monitoring](##module05)
 - [Django Practice](##django-practice)
 
 ## Module01:
@@ -116,9 +116,20 @@ Successfully deployed a batch inference pipeline that processes 3.4M taxi trip r
 
 ## Module05
 
-**TODO**
+This module implements production-grade ML monitoring using:
 
-Observation.
+- **Evidently AI** - Statistical drift detection and data quality metrics
+- **PostgreSQL** - Time-series storage for monitoring metrics  
+- **Grafana** - Visualization dashboards and alerting
+
+[Full homework results and documentation](Module05/homework_answers.md)
+
+### Key Learning Topics:
+- Data drift detection (ColumnDriftMetric, DatasetDriftMetric)
+- Custom metric implementation (ColumnQuantileMetric)
+- Time-series monitoring data storage
+- Production monitoring dashboard design
+- ML-specific statistical testing
 
 ## Django Practice
 

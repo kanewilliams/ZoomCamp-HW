@@ -9,8 +9,8 @@ This is an MLOps learning repository structured around different modules from th
 - **Module01**: Introduction with basic linear regression using marimo notebooks
 - **Module02**: Experiment tracking with MLflow, featuring taxi trip duration prediction
 - **Module03**: Orchestration with Prefect for horse racing data pipelines  
-- **Module04**: Deployment (TODO - possibly Kinesis + Lambda)
-- **Module05**: Monitoring/Observation (TODO)
+- **Module04**: Deployment with Docker and batch inference
+- **Module05**: ML monitoring with Evidently AI, PostgreSQL, and Grafana
 - **django_practice**: Database query optimization experiments
 
 ### Key Technologies
@@ -20,6 +20,9 @@ This is an MLOps learning repository structured around different modules from th
 - **MLflow**: Experiment tracking and model registry
 - **Prefect**: Workflow orchestration
 - **polars**: Modern pandas alternative for data processing
+- **Evidently AI**: ML monitoring and drift detection framework
+- **PostgreSQL**: Time-series metrics storage
+- **Grafana**: Monitoring dashboards and visualization
 - **Django**: Web framework for database experimentation
 
 ## Common Development Commands
@@ -80,6 +83,27 @@ python scrape.py
 python grab_data.py
 ```
 
+### Module05 - ML Monitoring
+```bash
+cd Module05
+
+# Start monitoring infrastructure
+docker compose up -d
+
+# Download March 2024 data
+uv run python q1_download_data.py
+
+# Run monitoring pipeline with PostgreSQL
+uv run python monitoring_postgres.py
+
+# Access services
+# Grafana: http://localhost:3000 (admin/admin)
+# Adminer: http://localhost:8080 (server=db, user=postgres, password=example, database=test)
+
+# Stop services
+docker compose down
+```
+
 ### Django Practice
 ```bash
 cd django_practice
@@ -114,6 +138,8 @@ Dependencies are managed via `pyproject.toml` with uv. Key packages:
 - scikit-learn 1.6.1+ (ML models)
 - polars 1.30.0+ (data processing)
 - marimo 0.13.10+ (notebooks)
+- evidently 0.6.7 (ML monitoring and drift detection)
+- psycopg 3.1.0+ (PostgreSQL integration)
 
 ## Development Notes
 

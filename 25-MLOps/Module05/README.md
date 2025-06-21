@@ -1,5 +1,13 @@
 # Module 05: ML Monitoring with Evidently + Grafana + PostgreSQL
 
+## ✅ Homework Results
+- **Q1:** 57457 rows in March 2024 Green Taxi data
+- **Q2:** Added ColumnQuantileMetric for fare_amount (quantile=0.5)
+- **Q3:** Maximum fare_amount quantile value: 14.2
+- **Q4:** Dashboard config location: project_folder/dashboards
+
+📄 **[Complete homework solutions and explanations](homework_answers.md)**
+
 ## 🎯 Learning Objectives
 - Understand ML monitoring concepts (data drift, model performance)
 - Use Evidently AI for metric calculation
