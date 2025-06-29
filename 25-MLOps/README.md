@@ -6,6 +6,7 @@
 - [Module03 - Orchestration](##module03)
 - [Module04 - Deployment](##module04)
 - [Module05 - Monitoring](##module05)
+- [Module06 - Best Practices](##module06)
 - [Django Practice](##django-practice)
 
 ## Module01:
@@ -130,6 +131,29 @@ This module implements production-grade ML monitoring using:
 - Time-series monitoring data storage
 - Production monitoring dashboard design
 - ML-specific statistical testing
+
+## Module06
+
+This module is all about making code bulletproof through **testing best practices**.
+
+[Complete homework answers and implementation](Module06/homework_answers.md)
+
+### What I Built:
+- Refactored messy batch inference code into testable, modular functions
+- Set up proper unit testing with pytest (finally!)
+- Built integration tests that actually simulate S3 with Localstack
+- Made everything configurable through environment variables
+
+### Key Learning:
+The big "aha" moment was realizing that good testing isn't just about catching bugs - it's about **confidence**. When I can run a full integration test that spins up fake S3, processes real data, and verifies the output, I know my deployment will work.
+
+Also learned that splitting I/O from business logic makes testing 10x easier. Who knew? 😄
+
+### Technologies:
+- **pytest** - Testing framework that doesn't make me want to cry
+- **Localstack** - Local AWS services (S3 simulation)
+- **Docker Compose** - Orchestrating test infrastructure
+- **s3fs** - Making pandas play nice with S3
 
 ## Django Practice
 
